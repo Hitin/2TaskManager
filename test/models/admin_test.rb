@@ -1,7 +1,7 @@
-require "test_helper"
+require 'test_helper'
 
 class AdminTest < ActiveSupport::TestCase
-  test "create" do
+  test 'create' do
     admin = create :admin
     assert admin.persisted?
   end
