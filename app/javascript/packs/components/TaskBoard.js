@@ -5,7 +5,7 @@ const data = {
   columns: [
     {
       id: 1,
-      title: 'Backlog',
+      title: "Backlogs",
       cards: [
         {
           id: 1,

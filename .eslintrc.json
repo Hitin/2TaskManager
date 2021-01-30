@@ -17,7 +17,7 @@
   },
   
   "settings": {
-    "import/extensions": [".js", ".jsx"],
+    "import/extensions": [".js", ".jsx"]
   },
   
   "rules": {
