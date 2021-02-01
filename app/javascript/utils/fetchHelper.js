@@ -22,9 +22,7 @@ axios.defaults.headers.put = headers();
 axios.defaults.headers.delete = headers();
 axios.interceptors.response.use(null, error => {
   if (error.response.status === 422) {
-    const {
-      response: { data: errors },
-    } = error;
+    const {response: { data: errors },} = error;
     return Promise.reject(camelize(errors.errors));
   }
 
