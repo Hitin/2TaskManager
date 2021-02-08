@@ -2,8 +2,15 @@ import React, { useEffect, useState } from 'react';
 import KanbanBoard from '@lourenci/react-kanban';
 import { propOr } from 'ramda';
 import Task from 'components/Task';
+import AddPopup from 'components/AddPopup';
 import ColumnHeader from 'components/ColumnHeader';
 import TasksRepository from 'repositories/TasksRepository';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import useStyles from './useStyles';
+import TaskForm from 'forms/TaskForm';
+
+
 
 const STATES = [
   { key: 'new_task', value: 'New' },
@@ -14,6 +21,11 @@ const STATES = [
   { key: 'released', value: 'Released' },
   { key: 'archived', value: 'Archived' },
 ];
+
+const MODES = {
+  ADD: 'add',
+  NONE: 'none',
+};
 
 const initialBoard = {
   columns: STATES.map((column) => ({
@@ -27,8 +39,10 @@ const initialBoard = {
 const TaskBoard = () => {
   const [board, setBoard] = useState(initialBoard);
   const [boardCards, setBoardCards] = useState([]);
+  const [mode, setMode] = useState(MODES.NONE);
   useEffect(() => loadBoard(), []);
   useEffect(() => generateBoard(), [boardCards]);
+  const styles = useStyles();
 
   const loadColumn = (state, page, perPage) =>
     TasksRepository.index({
@@ -68,6 +82,14 @@ const TaskBoard = () => {
     setBoard(board);
   };
 
+  const handleOpenAddPopup = () => {
+    setMode(MODES.ADD);
+  };
+  
+  const handleClose = () => {
+    setMode(MODES.NONE);
+  };
+
   const handleCardDragEnd = (task, source, destination) => {
     const transition = task.transitions.find(({ to }) => destination.toColumnId === to);
     if (!transition) {
@@ -88,7 +110,17 @@ const TaskBoard = () => {
     STATES.map(({ key }) => loadColumnInitial(key));
   };
 
+  const handleTaskCreate = (params) => {
+    const attributes = TaskForm.attributesToSubmit(params);
+    return TasksRepository.create(attributes).then(({ data: { task } }) => {
+      loadColumnInitial(task.state);
+      handleClose();
+    });
+  };
+
   return (
+  <>
+    {mode === MODES.ADD && <AddPopup onCreateCard={handleTaskCreate} onClose={handleClose} />}
     <KanbanBoard
       disableColumnDrag
       renderCard={(card) => <Task task={card} />}
@@ -97,6 +129,10 @@ const TaskBoard = () => {
     >
       {board}
     </KanbanBoard>
+    <Fab className={styles.addButton} color="primary" aria-label="add" onClick={handleOpenAddPopup}>
+      <AddIcon />
+    </Fab>
+  </>
   );
 };
 
