@@ -47,6 +47,7 @@ const EditPopup = ({ cardId, onClose, onCardDestroy, onLoadCard, onCardUpdate })
   };
   const isLoading = isNil(task);
 
+
   return (
     <Modal className={styles.modal} open onClose={onClose}>
       <Card className={styles.root}>

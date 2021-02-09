@@ -11,6 +11,6 @@ import WebpackerReact from 'webpacker-react';
 import TaskBoard from '../components/TaskBoard';
 
 WebpackerReact.setup({ TaskBoard });
-
+window.Routes = require('routes');
 Rails.start();
 ActiveStorage.start();
