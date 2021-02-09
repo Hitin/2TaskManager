@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { has } from 'ramda';
 
 import TextField from '@material-ui/core/TextField';
-
+import TaskPresenter from 'presenters/TaskPresenter';
 import useStyles from './useStyles';
 import UserSelect from 'components/UserSelect';
 
@@ -58,7 +58,7 @@ const Form = ({ errors, onChange, task }) => {
 
 Form.propTypes = {
   onChange: PropTypes.func.isRequired,
-  task: PropTypes.shape().isRequired,
+  task: TaskPresenter.shape().isRequired,
   errors: PropTypes.shape({
     name: PropTypes.arrayOf(PropTypes.string),
     description: PropTypes.arrayOf(PropTypes.string),
