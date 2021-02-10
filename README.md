@@ -1,1 +1,2 @@
 develop [![Build Status](https://travis-ci.org/Hitin/2TaskManager.svg?branch=develop)](https://travis-ci.org/Hitin/2TaskManager)
+[![Coverage Status](https://coveralls.io/repos/github/Hitin/2TaskManager/badge.svg?branch=feature/devops)](https://coveralls.io/github/Hitin/2TaskManager?branch=develop)
